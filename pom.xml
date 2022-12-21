@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.foodpanda</groupId>
+  <artifactId>foodpanda</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+  <name>foodpanda Parent</name>
+  <description>Parent Project for foodpanda</description>
+
+  <modules>
+    <module>foodpanda-common</module>
+    <module>foodpanda-pdo</module>
+    <module>foodpanda-domain</module>
+    <module>foodpanda-persistence</module>
+    <module>foodpanda-gui</module>
+    <module>foodpanda-client</module>
+    <module>foodpanda-server</module>
+    <module>foodpanda-daemon</module>
+    <!-- jlink images are built with profile "jlink" only, see jlink/pom.xml -->
+    <module>jlink</module>
+  </modules>
+
+  <properties>
+    <rootBasedir>${project.basedir}</rootBasedir>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <wurbelizer.version>17.3.2.1</wurbelizer.version>
+    <wurbel.wurbelDir>${rootBasedir}/target/wurbel</wurbel.wurbelDir>
+
+    <tentackle.version>17.9.0.0</tentackle.version>
+    <tentackle.serviceDir>${project.build.directory}/generated-resources/services</tentackle.serviceDir>
+    <tentackle.testServiceDir>${project.build.directory}/generated-test-resources/services</tentackle.testServiceDir>
+    <tentackle.manifestDirectory>${project.build.directory}/generated-resources/manifest</tentackle.manifestDirectory>
+    <tentackle.modelDir>${wurbel.wurbelDir}/model</tentackle.modelDir>
+    <tentackle.sqlDir>${wurbel.wurbelDir}/sql</tentackle.sqlDir>
+    <tentackle.modelDefaults>remote, bind, size, autoselect, tracked, root, rootid, rootclassid</tentackle.modelDefaults>
+
+    <postgres.version>42.3.1</postgres.version>
+    <dbUrl>jdbc:postgresql://localhost/foodpanda</dbUrl>
+    <dbUser>foodpanda</dbUser>
+    <dbPasswd>foodpanda</dbPasswd>
+    <dbService>rmi://localhost:8888/foodpandaServer</dbService>
+    <updateService>rmi://localhost:8890/foodpandaUpdate</updateService>
+    <updateURL>http://localhost/foodpanda/downloads</updateURL>
+
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.tentackle</groupId>
+        <artifactId>tentackle-bom</artifactId>
+        <version>${tentackle.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- runtime dependencies -->
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.7</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <!-- test dependencies -->
+      <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgres.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>7.4.0</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-wizard-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <configuration>
+            <profiles>
+              <PdoProfile>
+                <name>masterdata</name>
+                <pdoPackage>org.foodpanda.pdo.md</pdoPackage>
+                <minClassId>1000</minClassId>
+                <tablePrefix>md.</tablePrefix>
+                <pdoInterface>MasterData</pdoInterface>
+                <persistenceImplementation>AbstractPersistentMasterData</persistenceImplementation>
+                <domainPackage>org.foodpanda.pdo.md.domain</domainPackage>
+                <persistencePackage>org.foodpanda.pdo.md.persist</persistencePackage>
+                <domainImplPackage>org.foodpanda.domain.md</domainImplPackage>
+                <persistenceImplPackage>org.foodpanda.persist.md</persistenceImplPackage>
+              </PdoProfile>
+              <PdoProfile>
+                <name>transactiondata</name>
+                <pdoPackage>org.foodpanda.pdo.td</pdoPackage>
+                <minClassId>2000</minClassId>
+                <tablePrefix>td.</tablePrefix>
+                <pdoInterface>TransactionData</pdoInterface>
+                <persistenceImplementation>AbstractPersistentTransactionData</persistenceImplementation>
+                <domainPackage>org.foodpanda.pdo.td.domain</domainPackage>
+                <persistencePackage>org.foodpanda.pdo.td.persist</persistencePackage>
+                <domainImplPackage>org.foodpanda.domain.td</domainImplPackage>
+                <persistenceImplPackage>org.foodpanda.persist.td</persistenceImplPackage>
+              </PdoProfile>
+              <OperationProfile>
+                <name>operation</name>
+                <operationPackage>org.foodpanda.pdo.operation</operationPackage>
+                <domainPackage>org.foodpanda.pdo.operation</domainPackage>
+                <persistencePackage>org.foodpanda.pdo.operation</persistencePackage>
+                <domainImplPackage>org.foodpanda.domain.operation</domainImplPackage>
+                <persistenceImplPackage>org.foodpanda.persist.operation</persistenceImplPackage>
+              </OperationProfile>
+            </profiles>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <executions>
+            <execution>
+              <id>analyze</id>
+              <goals>
+                <goal>analyze</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>test-analyze</id>
+              <goals>
+                <goal>test-analyze</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <verbosity>info</verbosity>
+            <showCompileOutput>true</showCompileOutput>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-check-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <executions>
+            <execution>
+              <id>bundles</id>
+              <goals>
+                <goal>bundles</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>validations</id>
+              <goals>
+                <goal>validations</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <verbosity>info</verbosity>
+            <locales>en_US, de_DE</locales>
+            <scriptingLanguage>groovy</scriptingLanguage>
+            <showCompileOutput>true</showCompileOutput>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.tentackle</groupId>
+              <artifactId>tentackle-script-groovy</artifactId>
+              <version>${tentackle.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-i18n-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <configuration>
+            <verbosity>info</verbosity>
+            <locales>de</locales>
+            <url>${dbUrl}</url>
+            <user>${dbUser}</user>
+            <password>${dbPasswd}</password>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.postgresql</groupId>
+              <artifactId>postgresql</artifactId>
+              <version>${postgres.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-jlink-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <extensions>true</extensions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.wurbelizer</groupId>
+          <artifactId>wurbelizer-maven-plugin</artifactId>
+          <version>${wurbelizer.version}</version>
+          <executions>
+            <execution>
+              <id>wurbel</id>
+              <goals>
+                <goal>wurbel</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>test-wurbel</id>
+              <goals>
+                <goal>test-wurbel</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <wurbletDependencies>
+              <wurbletDependency>
+                <groupId>org.tentackle</groupId>
+                <artifactId>tentackle-persistence-wurblets</artifactId>
+                <version>${tentackle.version}</version>
+              </wurbletDependency>
+            </wurbletDependencies>
+            <verbosity>info</verbosity>
+            <filesets>
+              <fileset>
+                <includes>
+                  <!-- PDO entity interfaces -->
+                  <include>**/pdo/md/*.java</include>
+                  <include>**/pdo/td/*.java</include>
+                </includes>
+              </fileset>
+              <fileset>
+                <includes>
+                  <!-- PDO persistence interfaces -->
+                  <include>**/pdo/md/persist/*.java</include>
+                  <include>**/pdo/td/persist/*.java</include>
+                  <!-- PDO domain interfaces -->
+                  <include>**/pdo/md/domain/*.java</include>
+                  <include>**/pdo/td/domain/*.java</include>
+                </includes>
+                <followSymlinks>false</followSymlinks>
+              </fileset>
+              <fileset>
+                <includes>
+                  <!-- domain implementations -->
+                  <include>**/domain/md/*.java</include>
+                  <include>**/domain/td/*.java</include>
+                  <!-- persistence implementations -->
+                  <include>**/persist/md/*.java</include>
+                  <include>**/persist/td/*.java</include>
+                  <!-- operation implementations -->
+                  <include>**/persist/operation/*.java</include>
+                </includes>
+                <followSymlinks>false</followSymlinks>
+              </fileset>
+              <fileset>
+                <includes>
+                  <!-- remote delegates -->
+                  <include>**/rmi/*.java</include>
+                </includes>
+                <followSymlinks>false</followSymlinks>
+              </fileset>
+            </filesets>
+            <wurbletPaths>
+              <param>org.tentackle.wurblet</param>
+              <param>org.tentackle.persist.wurblet</param>
+            </wurbletPaths>
+            <wurbletProperties>
+              <guardtype>netbeans</guardtype>
+              <foldtype>collapsed</foldtype>
+              <mapSchema>false</mapSchema>
+              <tablePrefix />
+              <model>${tentackle.modelDir}</model>
+              <backends>oracle, postgresql</backends>
+              <integrity>full</integrity>
+              <modelDefaults>${tentackle.modelDefaults}</modelDefaults>
+
+              <!-- model column sizes -->
+              <ou_name>20</ou_name>
+              <ou_comment>256</ou_comment>
+              <msg_type>30</msg_type>
+              <msg_no>10</msg_no>
+              <msg_ref>30</msg_ref>
+              <msg_text>1024</msg_text>
+
+            </wurbletProperties>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.tentackle</groupId>
+          <artifactId>tentackle-sql-maven-plugin</artifactId>
+          <version>${tentackle.version}</version>
+          <configuration>
+            <verbosity>info</verbosity>
+            <modelDefaults>${tentackle.modelDefaults}</modelDefaults>
+            <backends>
+              <backend>
+                <url>${dbUrl}</url>
+                <user>${dbUser}</user>
+                <password>${dbPasswd}</password>
+                <schemaNames>td, md</schemaNames>
+                <migrationHints>
+                  <fileset>
+                    <directory>${rootBasedir}/src/main/migrate/postgres</directory>
+                    <includes>
+                      <include>**/*.hints</include>
+                    </includes>
+                  </fileset>
+                </migrationHints>
+                <minVersion>select version from migration order by since desc limit 1</minVersion>
+              </backend>
+            </backends>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.postgresql</groupId>
+              <artifactId>postgresql</artifactId>
+              <version>${postgres.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <release>17</release>
+            <showWarnings>true</showWarnings>
+            <showDeprecation>true</showDeprecation>
+            <compilerArgs>
+              <arg>-Xlint:auxiliaryclass,cast,classfile,deprecation,dep-ann,divzero,empty,fallthrough,finally,opens,overloads,options,overrides,path,rawtypes,removal,requires-transitive-automatic,requires-automatic,serial,static,try,varargs,unchecked</arg>
+            </compilerArgs>
+            <!-- necessary since Java 9, see https://issues.apache.org/jira/browse/MCOMPILER-310 -->
+            <annotationProcessorPaths>
+              <dependency>
+                <groupId>org.tentackle</groupId>
+                <artifactId>tentackle-core</artifactId>
+                <version>${tentackle.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.tentackle</groupId>
+                <artifactId>tentackle-pdo</artifactId>
+                <version>${tentackle.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.tentackle</groupId>
+                <artifactId>tentackle-fx</artifactId>
+                <version>${tentackle.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.tentackle</groupId>
+                <artifactId>tentackle-fx-rdc</artifactId>
+                <version>${tentackle.version}</version>
+              </dependency>
+              <dependency>    <!-- necessary for fx-rdc processors because deps are not recognized here -->
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>17.0.1</version>
+              </dependency>
+            </annotationProcessorPaths>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.2.0</version>
+          <configuration>
+            <encoding>UTF-8</encoding>
+            <propertiesEncoding>UTF-8</propertiesEncoding>
+            <escapeString>\</escapeString>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.2</version>
+          <configuration>
+            <argLine>-Duser.language=en -Duser.region=US</argLine>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.ow2.asm</groupId>
+              <artifactId>asm</artifactId>
+              <version>9.2</version> <!-- Use newer version of ASM -->
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.2.1</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.3.1</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.ow2.asm</groupId>
+              <artifactId>asm</artifactId>
+              <version>9.2</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>keytool-maven-plugin</artifactId>
+          <version>1.5</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/src/main/filtered-resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <!--  additional source directory for generated service files -->
+      <resource>
+        <directory>${tentackle.serviceDir}</directory>
+      </resource>
+    </resources>
+
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/src/test/resources</directory>
+      </testResource>
+      <testResource>
+        <directory>${project.basedir}/src/test/filtered-resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>${tentackle.testServiceDir}</directory>
+      </testResource>
+    </testResources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.tentackle</groupId>
+        <artifactId>tentackle-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.tentackle</groupId>
+        <artifactId>tentackle-check-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.tentackle</groupId>
+        <artifactId>tentackle-i18n-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+
+  </build>
+
+  <profiles>
+    <profile>
+      <!-- generate sources and javadoc -->
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <configuration>
+                  <quiet>true</quiet>
+                  <additionalOptions>
+                    <additionalOption>-html5</additionalOption>
+                    <!-- don't complain about wurblet args -->
+                    <additionalOption>-Xdoclint:none</additionalOption>
+                  </additionalOptions>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

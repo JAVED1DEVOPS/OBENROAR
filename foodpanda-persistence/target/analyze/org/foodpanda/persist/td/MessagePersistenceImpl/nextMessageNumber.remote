@@ -1,0 +1,8 @@
+# org.tentackle.buildsupport.RemoteMethodInfo Version 2.0
+# public java.lang.String nextMessageNumber()
+method: nextMessageNumber
+class: org.foodpanda.persist.td.MessagePersistenceImpl
+superclass: org.foodpanda.persist.AbstractPersistentTransactionData<org.foodpanda.pdo.td.Message,org.foodpanda.persist.td.MessagePersistenceImpl>
+returns: java.lang.String . false false false false false false
+modifiers: public
+varargs: false

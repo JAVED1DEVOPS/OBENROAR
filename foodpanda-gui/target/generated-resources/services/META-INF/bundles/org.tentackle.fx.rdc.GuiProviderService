@@ -1,0 +1,3 @@
+org.foodpanda.pdo.td.Message = org.foodpanda.gui.message.MessageGuiProvider
+org.foodpanda.pdo.md.User = org.foodpanda.gui.user.UserGuiProvider
+org.foodpanda.pdo.md.UserGroup = org.foodpanda.gui.usergroup.UserGroupGuiProvider

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.foodpanda</groupId>
+    <artifactId>foodpanda</artifactId>
+    <version>1.0</version>
+  </parent>
+
+  <artifactId>foodpanda-pdo</artifactId>
+  <packaging>jar</packaging>
+  <name>foodpanda PDO</name>
+  <description>PDO Layer for foodpanda</description>
+
+  <properties>
+    <rootBasedir>${project.parent.basedir}</rootBasedir>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.foodpanda</groupId>
+      <artifactId>foodpanda-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.wurbelizer</groupId>
+        <artifactId>wurbelizer-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.tentackle</groupId>
+        <artifactId>tentackle-sql-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

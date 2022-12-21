@@ -1,0 +1,1 @@
+org.tentackle.pdo.DomainObject: org.foodpanda.domain.md.OrgUnitDomainImpl = org.foodpanda.pdo.md.OrgUnit

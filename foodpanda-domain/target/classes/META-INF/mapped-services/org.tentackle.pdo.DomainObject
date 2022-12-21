@@ -1,0 +1,5 @@
+org.foodpanda.domain.md.OrgUnitDomainImpl = org.foodpanda.pdo.md.OrgUnit
+org.foodpanda.domain.md.User2GroupDomainImpl = org.foodpanda.pdo.md.User2Group
+org.foodpanda.domain.md.UserDomainImpl = org.foodpanda.pdo.md.User
+org.foodpanda.domain.md.UserGroupDomainImpl = org.foodpanda.pdo.md.UserGroup
+org.foodpanda.domain.td.MessageDomainImpl = org.foodpanda.pdo.td.Message

@@ -1,0 +1,8 @@
+org.foodpanda.gui.about.AboutView
+org.foodpanda.gui.main.MainController
+org.foodpanda.gui.message.MessageFinder
+org.foodpanda.gui.password.ChangePasswordView
+org.foodpanda.gui.prefs.GeneralPreferences
+org.foodpanda.gui.prefs.PreferencesDialog
+org.foodpanda.gui.user.UserEditor
+org.foodpanda.gui.usergroup.UserGroupEditor

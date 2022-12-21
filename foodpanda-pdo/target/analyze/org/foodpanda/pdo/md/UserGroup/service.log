@@ -1,0 +1,4 @@
+org.tentackle.session.ClassId: org.foodpanda.pdo.md.UserGroup = 1002
+org.tentackle.pdo.Plural: org.foodpanda.pdo.md.UserGroup = "UserGroups"
+org.tentackle.pdo.Singular: org.foodpanda.pdo.md.UserGroup = "UserGroup"
+org.tentackle.session.TableName: org.foodpanda.pdo.md.UserGroup = "md.usergroup"

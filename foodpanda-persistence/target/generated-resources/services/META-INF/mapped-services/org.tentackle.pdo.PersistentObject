@@ -1,0 +1,5 @@
+org.foodpanda.persist.md.OrgUnitPersistenceImpl = org.foodpanda.pdo.md.OrgUnit
+org.foodpanda.persist.md.User2GroupPersistenceImpl = org.foodpanda.pdo.md.User2Group
+org.foodpanda.persist.md.UserGroupPersistenceImpl = org.foodpanda.pdo.md.UserGroup
+org.foodpanda.persist.md.UserPersistenceImpl = org.foodpanda.pdo.md.User
+org.foodpanda.persist.td.MessagePersistenceImpl = org.foodpanda.pdo.td.Message

@@ -1,0 +1,4 @@
+org.tentackle.session.ClassId: org.foodpanda.pdo.td.Message = 2001
+org.tentackle.pdo.Plural: org.foodpanda.pdo.td.Message = "Messages"
+org.tentackle.pdo.Singular: org.foodpanda.pdo.td.Message = "Message"
+org.tentackle.session.TableName: org.foodpanda.pdo.td.Message = "td.message"

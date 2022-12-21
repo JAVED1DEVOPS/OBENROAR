@@ -1,0 +1,8 @@
+org\foodpanda\domain\DomainBundle.class
+org\foodpanda\domain\service\Hook.class
+org\foodpanda\domain\md\User2GroupDomainImpl.class
+module-info.class
+org\foodpanda\domain\md\UserGroupDomainImpl.class
+org\foodpanda\domain\md\OrgUnitDomainImpl.class
+org\foodpanda\domain\td\MessageDomainImpl.class
+org\foodpanda\domain\md\UserDomainImpl.class

@@ -1,0 +1,3 @@
+org.tentackle.pdo.Plural: org.foodpanda.pdo.md.OrgUnit = "Organizational Units"
+org.tentackle.pdo.Singular: org.foodpanda.pdo.md.OrgUnit = "Organizational Unit"
+org.tentackle.session.TableName: org.foodpanda.pdo.md.OrgUnit = "md.orgunit"

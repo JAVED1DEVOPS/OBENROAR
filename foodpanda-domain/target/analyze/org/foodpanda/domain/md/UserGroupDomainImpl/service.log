@@ -1,0 +1,1 @@
+org.tentackle.pdo.DomainObject: org.foodpanda.domain.md.UserGroupDomainImpl = org.foodpanda.pdo.md.UserGroup

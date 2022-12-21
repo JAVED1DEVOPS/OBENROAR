@@ -1,0 +1,2 @@
+org.foodpanda.gui.user.RemoveUserGroupItem = org.foodpanda.pdo.md.UserGroup
+org.foodpanda.gui.usergroup.RemoveUserItem = org.foodpanda.pdo.md.User

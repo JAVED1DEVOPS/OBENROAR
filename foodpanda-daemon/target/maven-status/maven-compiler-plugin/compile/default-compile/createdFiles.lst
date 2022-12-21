@@ -1,0 +1,3 @@
+module-info.class
+org\foodpanda\daemon\service\Hook.class
+org\foodpanda\daemon\foodpandaDaemon.class

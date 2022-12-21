@@ -1,0 +1,1 @@
+org.tentackle.fx.rdc.GuiProvider: org.foodpanda.gui.usergroup.UserGroupGuiProvider = org.foodpanda.pdo.md.UserGroup

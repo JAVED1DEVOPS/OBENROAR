@@ -1,0 +1,1 @@
+org.tentackle.pdo.PersistentObject: org.foodpanda.persist.md.OrgUnitPersistenceImpl = org.foodpanda.pdo.md.OrgUnit

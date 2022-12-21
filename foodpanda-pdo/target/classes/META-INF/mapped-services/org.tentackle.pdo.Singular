@@ -1,0 +1,5 @@
+org.foodpanda.pdo.md.OrgUnit = "Organizational Unit"
+org.foodpanda.pdo.md.User = "User"
+org.foodpanda.pdo.md.User2Group = "User2Group"
+org.foodpanda.pdo.md.UserGroup = "UserGroup"
+org.foodpanda.pdo.td.Message = "Message"

@@ -1,0 +1,4 @@
+org.foodpanda.pdo.md.User = 1001
+org.foodpanda.pdo.md.User2Group = 1003
+org.foodpanda.pdo.md.UserGroup = 1002
+org.foodpanda.pdo.td.Message = 2001

@@ -1,0 +1,7 @@
+org\foodpanda\server\rmi\UpdateServiceImpl.class
+org\foodpanda\server\ServerBundle.class
+module-info.class
+org\foodpanda\server\rmi\foodpandaRemoteDbConnectionImpl.class
+org\foodpanda\server\foodpandaServer.class
+org\foodpanda\server\service\Hook.class
+org\foodpanda\server\rmi\foodpandaRemoteDbSessionImpl.class
